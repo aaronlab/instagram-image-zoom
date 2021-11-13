@@ -2,4 +2,4 @@
 
 ### Preview
 
-[![Preview](./preview.gif)
+[![Preview](./preview.gif)](./preview.gif)
