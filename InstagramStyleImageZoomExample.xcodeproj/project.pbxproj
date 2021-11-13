@@ -64,7 +64,7 @@
 		A4DA79CA273FDF4E00DD8166 = {
 			isa = PBXGroup;
 			children = (
-				A4DA79D5273FDF4E00DD8166 /* TableViewCellZoom */,
+				A4DA79D5273FDF4E00DD8166 /* InstagramStyleImageZoomExample */,
 				A4DA79D4273FDF4E00DD8166 /* Products */,
 				1C714E0F0B41B5083657CF48 /* Pods */,
 				E30AE38F255A6849C7532D4F /* Frameworks */,
@@ -79,7 +79,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A4DA79D5273FDF4E00DD8166 /* TableViewCellZoom */ = {
+		A4DA79D5273FDF4E00DD8166 /* InstagramStyleImageZoomExample */ = {
 			isa = PBXGroup;
 			children = (
 				A4DA79D6273FDF4E00DD8166 /* AppDelegate.swift */,
@@ -93,7 +93,6 @@
 				A4DA79E1273FDF4F00DD8166 /* LaunchScreen.storyboard */,
 				A4DA79E4273FDF4F00DD8166 /* Info.plist */,
 			);
-			name = TableViewCellZoom;
 			path = InstagramStyleImageZoomExample;
 			sourceTree = "<group>";
 		};

@@ -1,6 +1,6 @@
 //
 //  TableViewCell.swift
-//  TableViewCellZoom
+//  InstagramStyleImageZoomExample
 //
 //  Created by Aaron Lee on 2021/11/13.
 //
