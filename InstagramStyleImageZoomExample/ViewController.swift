@@ -215,7 +215,7 @@ extension ViewController {
         
         // Flags
         isPinched = true
-        tableView.isScrollEnabled = false
+        tableView.panGestureRecognizer.isEnabled = false
         
         // Image
         let image = cell.imageViewThumbnail.image
@@ -242,21 +242,21 @@ extension ViewController {
     
     private func cellPinchGestureDidEnd(cell: TableViewCell, gesture: UIPinchGestureRecognizer) {
         guard let cellImageView = gesture.view as? UIImageView else { return }
-            gesture.scale = 1
+        gesture.scale = 1
+        tableView.panGestureRecognizer.isEnabled = true
+        
+        UIView.animate(withDuration: 0.3) {
+            self.safeAreaCoverView.alpha = 1
+            self.backgroundView.alpha = 0
+            self.pinchedImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.pinchedImageView.frame = cellImageView.convert(cellImageView.bounds, to: self.view)
             
-            UIView.animate(withDuration: 0.3) {
-                self.safeAreaCoverView.alpha = 1
-                self.backgroundView.alpha = 0
-                self.pinchedImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                self.pinchedImageView.frame = cellImageView.convert(cellImageView.bounds, to: self.view)
-                
-            } completion: { _ in
-                self.tableView.isScrollEnabled = true
-                self.isPinched = false
-                
-                self.pinchedImageView.alpha = 0
-                cellImageView.alpha = 1
-            }
+        } completion: { _ in
+            self.isPinched = false
+            
+            self.pinchedImageView.alpha = 0
+            cellImageView.alpha = 1
+        }
         
     }
     
