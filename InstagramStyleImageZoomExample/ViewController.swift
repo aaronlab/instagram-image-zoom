@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import RxSwift
+import RxCocoa
 import RxGesture
 import RxDataSources
 import SnapKit
@@ -19,37 +20,45 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private var bag = DisposeBag()
-    
     private var viewModel = ViewModel()
     
-    private let tableView = UITableView()
+    // MARK: - Public Properties
+    
+    var bag = DisposeBag()
+    
+    var tableView = UITableView()
         .then {
             $0.rowHeight = UIScreen.main.bounds.width
             $0.allowsSelection = false
             $0.separatorStyle = .none
         }
     
-    private let backgroundView = UIView()
+    var pinchedImageBackgroundView = UIView()
         .then {
             $0.backgroundColor = .black
             $0.alpha = 0
         }
     
-    private let pinchedImageView = UIImageView()
+    var pinchedImageView = UIImageView()
         .then {
             $0.alpha = 0
             $0.clipsToBounds = true
             $0.contentMode = .scaleAspectFill
         }
     
-    private let safeAreaCoverView = UIView()
+    var safeAreaCoverView = UIView()
         .then {
             $0.backgroundColor = .white
             $0.alpha = 0
         }
     
-    private var isPinched = false
+    var isImagePinched = false
+    
+    var imageViewDidPinch = PublishSubject<UIPinchGestureRecognizer>()
+    
+    var imageViewDidPan = PublishSubject<UIPanGestureRecognizer>()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +91,7 @@ extension ViewController {
     }
     
     private func configureBackgroundView() {
-        view.addSubview(backgroundView)
+        view.addSubview(pinchedImageBackgroundView)
     }
     
     private func configureImageView() {
@@ -111,7 +120,7 @@ extension ViewController {
     }
     
     private func layoutBackgroundView() {
-        backgroundView.snp.makeConstraints {
+        pinchedImageBackgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -120,10 +129,12 @@ extension ViewController {
 
 // MARK: - Bind
 
-extension ViewController {
+extension ViewController: PinchableViewControllerType {
     
     private func bindRx() {
         bindDataSource()
+        bindImageViewPinchGesture()
+        bindImageViewPanGesture()
     }
     
     private func bindDataSource() {
@@ -186,98 +197,34 @@ extension ViewController {
         
         cellImageViewGestureObservable
             .when(.began)
-            .bind(onNext: { [weak self] gesture in
-                self?.cellPinchGestureDidBegan(cell: cell, gesture: gesture)
+            .do(onNext: { [weak self] _ in
+                self?.safeAreaCoverView.alpha = 0
             })
+            .bind(to: imageViewDidPinch)
             .disposed(by: cell.bag)
         
         cellImageViewGestureObservable
             .when(.changed)
-            .bind(onNext: { [weak self] gesture in
-                self?.cellPinchGestureDidChange(cell: cell, gesture: gesture)
-            })
+            .bind(to: imageViewDidPinch)
             .disposed(by: cell.bag)
         
         cellImageViewGestureObservable
             .when(.ended)
-            .bind(onNext: { [weak self] gesture in
-                self?.cellPinchGestureDidEnd(cell: cell, gesture: gesture)
+            .do(onNext: { [weak self] _ in
+                UIView.animate(withDuration: 0.3) {
+                    self?.safeAreaCoverView.alpha = 1
+                }
             })
+            .bind(to: imageViewDidPinch)
             .disposed(by: cell.bag)
-    }
-    
-    private func cellPinchGestureDidBegan(cell: TableViewCell, gesture: UIPinchGestureRecognizer) {
-        guard let cellImageView = gesture.view as? UIImageView else { return }
-        
-        if gesture.scale < 1 { return }
-        
-        if isPinched { return }
-        
-        // Flags
-        isPinched = true
-        tableView.panGestureRecognizer.isEnabled = false
-        
-        // Image
-        let image = cell.imageViewThumbnail.image
-        pinchedImageView.image = image
-        
-        // Position + Frame
-        let convertedFrame = cellImageView.convert(cellImageView.bounds, to: view)
-        pinchedImageView.frame = convertedFrame
-        
-        // Visiblity
-        pinchedImageView.alpha = 1
-        safeAreaCoverView.alpha = 0
-        cellImageView.alpha = 0
-        
-        UIView.animate(withDuration: 0.15) {
-            self.backgroundView.alpha = 0.6
-        }
-    }
-    
-    private func cellPinchGestureDidChange(cell: TableViewCell, gesture: UIPinchGestureRecognizer) {
-        let maxScale: CGFloat = max(0.8, gesture.scale)
-        pinchedImageView.transform = CGAffineTransform(scaleX: maxScale, y: maxScale)
-    }
-    
-    private func cellPinchGestureDidEnd(cell: TableViewCell, gesture: UIPinchGestureRecognizer) {
-        guard let cellImageView = gesture.view as? UIImageView else { return }
-        gesture.scale = 1
-        tableView.panGestureRecognizer.isEnabled = true
-        
-        UIView.animate(withDuration: 0.3) {
-            self.safeAreaCoverView.alpha = 1
-            self.backgroundView.alpha = 0
-            self.pinchedImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.pinchedImageView.frame = cellImageView.convert(cellImageView.bounds, to: self.view)
-            
-        } completion: { _ in
-            self.isPinched = false
-            
-            self.pinchedImageView.alpha = 0
-            cellImageView.alpha = 1
-        }
-        
     }
     
     private func bindCellPanGesture(with cell: TableViewCell) {
         cell.imageViewThumbnail
             .rx
-            .gesture(.pan(configuration: nil))
-            .bind(onNext: { [weak self] gesture in
-                guard let self = self,
-                      let gesture = gesture as? UIPanGestureRecognizer,
-                      self.isPinched else { return }
-                
-                self.cellPanGestureDidRecognize(gesture)
-            })
+            .panGesture(configuration: nil)
+            .bind(to: imageViewDidPan)
             .disposed(by: cell.bag)
-    }
-    
-    private func cellPanGestureDidRecognize(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        pinchedImageView.center = CGPoint(x: pinchedImageView.center.x + translation.x, y: pinchedImageView.center.y + translation.y)
-        gesture.setTranslation(.zero, in: view)
     }
     
 }
