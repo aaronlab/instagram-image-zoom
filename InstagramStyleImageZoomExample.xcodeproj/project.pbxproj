@@ -18,7 +18,6 @@
 		A4DA79EB273FE5A400DD8166 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA79EA273FE5A400DD8166 /* TableViewCell.swift */; };
 		A4DA79ED273FE6B900DD8166 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA79EC273FE6B900DD8166 /* ViewModel.swift */; };
 		A4DA79EF273FE76000DD8166 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA79EE273FE76000DD8166 /* DataSource.swift */; };
-		A4DA79F1273FEA0E00DD8166 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA79F0273FEA0E00DD8166 /* ImageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		A4DA79EA273FE5A400DD8166 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		A4DA79EC273FE6B900DD8166 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		A4DA79EE273FE76000DD8166 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		A4DA79F0273FEA0E00DD8166 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		A9A0035892BC61D9CF007AA5 /* Pods-TableViewCellZoom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewCellZoom.release.xcconfig"; path = "Target Support Files/Pods-TableViewCellZoom/Pods-TableViewCellZoom.release.xcconfig"; sourceTree = "<group>"; };
 		B35A3C5731F52CE8567CABFD /* Pods-TableViewCellZoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewCellZoom.debug.xcconfig"; path = "Target Support Files/Pods-TableViewCellZoom/Pods-TableViewCellZoom.debug.xcconfig"; sourceTree = "<group>"; };
 		F8DA2CB43926E31BFD1BD02A /* Pods_InstagramStyleImageZoomExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramStyleImageZoomExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +91,6 @@
 				A4A6FA6F2742809D00BEFA4B /* K.swift */,
 				A4DA79EC273FE6B900DD8166 /* ViewModel.swift */,
 				A4DA79EE273FE76000DD8166 /* DataSource.swift */,
-				A4DA79F0273FEA0E00DD8166 /* ImageManager.swift */,
 				A4DA79EA273FE5A400DD8166 /* TableViewCell.swift */,
 				A4DA79DF273FDF4F00DD8166 /* Assets.xcassets */,
 				A4DA79E1273FDF4F00DD8166 /* LaunchScreen.storyboard */,
@@ -224,7 +221,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4DA79F1273FEA0E00DD8166 /* ImageManager.swift in Sources */,
 				A4A6FA72274281DE00BEFA4B /* PinchableViewControllerType.swift in Sources */,
 				A4DA79EF273FE76000DD8166 /* DataSource.swift in Sources */,
 				A4DA79ED273FE6B900DD8166 /* ViewModel.swift in Sources */,
