@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		87D4A0FE620A9A2C8E54FA85 /* Pods_InstagramStyleImageZoomExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DA2CB43926E31BFD1BD02A /* Pods_InstagramStyleImageZoomExample.framework */; };
+		A43B94882752707B0048FF02 /* PinchImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43B94872752707B0048FF02 /* PinchImageView.swift */; };
 		A4A6FA702742809D00BEFA4B /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A6FA6F2742809D00BEFA4B /* K.swift */; };
 		A4A6FA72274281DE00BEFA4B /* PinchableViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A6FA71274281DE00BEFA4B /* PinchableViewControllerType.swift */; };
 		A4DA79D7273FDF4E00DD8166 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA79D6273FDF4E00DD8166 /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		62DA210B545135A73D1E86A8 /* Pods-InstagramStyleImageZoomExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramStyleImageZoomExample.debug.xcconfig"; path = "Target Support Files/Pods-InstagramStyleImageZoomExample/Pods-InstagramStyleImageZoomExample.debug.xcconfig"; sourceTree = "<group>"; };
 		766EAE0C2181CE9F251F34D4 /* Pods-InstagramStyleImageZoomExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramStyleImageZoomExample.release.xcconfig"; path = "Target Support Files/Pods-InstagramStyleImageZoomExample/Pods-InstagramStyleImageZoomExample.release.xcconfig"; sourceTree = "<group>"; };
+		A43B94872752707B0048FF02 /* PinchImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchImageView.swift; sourceTree = "<group>"; };
 		A4A6FA6F2742809D00BEFA4B /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		A4A6FA71274281DE00BEFA4B /* PinchableViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchableViewControllerType.swift; sourceTree = "<group>"; };
 		A4DA79D3273FDF4E00DD8166 /* InstagramStyleImageZoomExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramStyleImageZoomExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 				A4DA79D8273FDF4E00DD8166 /* SceneDelegate.swift */,
 				A4DA79DA273FDF4E00DD8166 /* ViewController.swift */,
 				A4A6FA71274281DE00BEFA4B /* PinchableViewControllerType.swift */,
+				A43B94872752707B0048FF02 /* PinchImageView.swift */,
 				A4A6FA6F2742809D00BEFA4B /* K.swift */,
 				A4DA79EC273FE6B900DD8166 /* ViewModel.swift */,
 				A4DA79EE273FE76000DD8166 /* DataSource.swift */,
@@ -224,6 +227,7 @@
 				A4A6FA72274281DE00BEFA4B /* PinchableViewControllerType.swift in Sources */,
 				A4DA79EF273FE76000DD8166 /* DataSource.swift in Sources */,
 				A4DA79ED273FE6B900DD8166 /* ViewModel.swift in Sources */,
+				A43B94882752707B0048FF02 /* PinchImageView.swift in Sources */,
 				A4DA79DB273FDF4E00DD8166 /* ViewController.swift in Sources */,
 				A4DA79EB273FE5A400DD8166 /* TableViewCell.swift in Sources */,
 				A4A6FA702742809D00BEFA4B /* K.swift in Sources */,

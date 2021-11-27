@@ -16,7 +16,7 @@ protocol PinchableViewControllerType: UIViewController {
     
     var pinchedImageBackgroundView: UIView { get }
     
-    var pinchedImageView: UIImageView { get }
+    var pinchedImageView: PinchImageView { get }
     
     var isImagePinched: Bool { get set }
     
@@ -47,8 +47,11 @@ extension PinchableViewControllerType {
             })
             .disposed(by: bag)
         
-        imageViewDidPinch
-            .when(.ended)
+        let pinchEndObservable = Observable.of(imageViewDidPinch.when(.ended),
+                                               imageViewDidPinch.when(.cancelled),
+                                               imageViewDidPinch.when(.failed)).merge()
+        
+        pinchEndObservable
             .subscribe(onNext: { [weak self] gesture in
                 self?.imageViewPinchGestureDidEnd(gesture: gesture)
             })
@@ -60,6 +63,8 @@ extension PinchableViewControllerType {
         
         if gesture.scale < 1 { return }
         if isImagePinched { return }
+        
+        pinchedImageView.pinchGesture = gesture
         
         // Flags
         isImagePinched = true
@@ -134,10 +139,23 @@ extension PinchableViewControllerType {
     }
     
     func bindImageViewPanGesture() {
-        imageViewDidPan
+        let changeObservable = Observable.of(imageViewDidPan.when(.began),
+                                             imageViewDidPan.when(.changed),
+                                             imageViewDidPan.when(.ended)).merge()
+        changeObservable
             .subscribe { [weak self] gesture in
                 self?.imageViewPanGestureDidRecognize(gesture)
             }
+            .disposed(by: bag)
+        
+        let endObservable = Observable.of(imageViewDidPan.when(.failed),
+                                          imageViewDidPan.when(.cancelled)).merge()
+        
+        endObservable
+            .subscribe(onNext: { [weak self] _ in
+                guard let pinchGesture = self?.pinchedImageView.pinchGesture else { return }
+                self?.imageViewPinchGestureDidEnd(gesture: pinchGesture)
+            })
             .disposed(by: bag)
     }
     
