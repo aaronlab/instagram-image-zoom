@@ -70,6 +70,11 @@ extension PinchableViewControllerType {
         isImagePinched = true
         tableView.panGestureRecognizer.isEnabled = false
         
+        // Offset
+        if tableView.contentOffset.y < 0 {
+            tableView.setContentOffset(.zero, animated: true)
+        }
+        
         // Image
         let image = gestureView.image
         pinchedImageView.image = image
