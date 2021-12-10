@@ -71,8 +71,12 @@ extension PinchableViewControllerType {
         tableView.panGestureRecognizer.isEnabled = false
         
         // Offset
-        if tableView.contentOffset.y < 0 {
-            tableView.setContentOffset(.zero, animated: true)
+        let contentOffset = tableView.contentOffset.y
+        let contentInsetTop = tableView.contentInset.top
+        if contentOffset < -contentInsetTop {
+            let point = CGPoint(x: tableView.contentOffset.x,
+                                y: -contentInsetTop)
+            tableView.setContentOffset(point, animated: true)
         }
         
         // Image
